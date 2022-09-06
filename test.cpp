@@ -27,4 +27,6 @@ int main() {
 	cout << m;
 	m[{2,4,6}] = "bar2";
 	cout << "====" << endl << m;
+	cout << "contains {2,3}? " << m.contains({2,3}) << endl;
+	cout << "contains {1,3}? " << m.contains({1,3}) << endl;
 }

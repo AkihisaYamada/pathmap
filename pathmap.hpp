@@ -120,11 +120,14 @@ public:
 	}
 	T* find( path_type const& path ) {
 		auto const p = _find( path.begin(), path.end() );
-		return p ? p->ptr : NULL;
+		return p ? p->_ptr : NULL;
 	}
 	T const* find( path_type const& path ) const {
 		auto const p = _find( path.begin(), path.end() );
-		return p ? p->ptr : NULL;
+		return p ? p->_ptr : NULL;
+	}
+	bool contains( path_type const& path ) const {
+		return find(path) != NULL;
 	}
 	bool allocated() const {
 		return _ptr != NULL;
@@ -262,7 +265,7 @@ pathmap<L,T,P>* pathmap<L,T,P>::_find(
 		if( it == end ) {
 			return cur;
 		}
-		auto& next_it = cur->children.find(*it);
+		auto const& next_it = cur->children.find(*it);
 		if( next_it == cur->children.end() ) {
 			return NULL;
 		}
@@ -279,7 +282,7 @@ pathmap<L,T,P> const* pathmap<L,T,P>::_find(
 		if( it == end ) {
 			return cur;
 		}
-		auto& next_it = cur->children.find(*it);
+		auto const& next_it = cur->children.find(*it);
 		if( next_it == cur->children.end() ) {
 			return NULL;
 		}
