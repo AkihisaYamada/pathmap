@@ -377,9 +377,9 @@ void paths_sub(
 	if( space.allocated() ) {
 		paths.push_back(prefix);
 	}
-	for( auto& ch_it : space.children ) {
-		auto& l_it = prefix.insert( ch_it->first ).first;
-		paths_sub( ch_it->second, paths, prefix );
+	for( auto& ch : space.children ) {
+		auto const& l_it = prefix.insert( ch.first ).first;
+		paths_sub( ch.second, paths, prefix );
 		prefix.erase( l_it );
 	}
 }
@@ -431,17 +431,17 @@ void subpaths_sub(
 	}
 	auto next = it;
 	next++;
-	for( auto& ch_it : space.children ) {
-		while( ch_it->first > *it ) {
+	for( auto const& ch : space.children ) {
+		while( ch.first > *it ) {
 			it = next;
 			next++;
 			if( it == end ) {
 				return;
 			}
 		}
-		if( ch_it->first == *it ) {
-			auto& l_it = prefix.insert( ch_it->first ).first;
-			subpaths_sub( ch_it->second, next, end, prefix, paths );
+		if( ch.first == *it ) {
+			auto const& l_it = prefix.insert( ch.first ).first;
+			subpaths_sub( ch.second, next, end, prefix, paths );
 			prefix.erase( l_it );
 		}
 	}
@@ -457,15 +457,15 @@ void superpaths_sub(
 	if( it == end ) {
 		paths_sub( space, paths, prefix );
 	} else {
-		for( auto& ch_it : space.children ) {
-			if( ch_it->first > *it ) {
+		for( auto& ch : space.children ) {
+			if( ch.first > *it ) {
 				break;
 			}
-			auto& label_it = prefix.insert(ch_it->first).first;
-			if( ch_it->first == *it ) {
+			auto const& label_it = prefix.insert(ch.first).first;
+			if( ch.first == *it ) {
 				it++;
 			}
-			superpaths_sub( ch_it->second, it, end, prefix, paths );
+			superpaths_sub( ch.second, it, end, prefix, paths );
 			prefix.erase(label_it);
 		}
 	}

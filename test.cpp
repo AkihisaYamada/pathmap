@@ -5,11 +5,20 @@
 using namespace std;
 
 template<class T>
-ostream& operator<<(ostream& os, vector<T> const& xs) {
+ostream& operator<<(ostream& os, set<T> const& xs) {
+	os << "{ ";
 	for( auto const& x : xs ) {
 		os << x << ' ';
 	}
-	return os;
+	return os << '}';
+}
+template<class T>
+ostream& operator<<(ostream& os, vector<T> const& xs) {
+	os << "[ ";
+	for( auto const& x : xs ) {
+		os << x << ' ';
+	}
+	return os << ']';
 }
 template<typename L, typename T, class P = vector<L>>
 ostream& operator<<(ostream& os, pathmap<L,T,P> const& m) {
@@ -23,10 +32,10 @@ int main() {
 	setmap<int,string> m;
 	m[{1,4}] = "foo";
 	m[{6,4,2}] = "bar";
-	m[{2,3}] = "baz";
+	m[{1}] = "baz";
+	m[{1,4,6,2}] = "hoge";
 	cout << m;
 	m[{2,4,6}] = "bar2";
 	cout << "====" << endl << m;
-	cout << "contains {2,3}? " << m.contains({2,3}) << endl;
-	cout << "contains {1,3}? " << m.contains({1,3}) << endl;
+	cout << "supersets of {1}? " << m.supersets({1}) << endl;
 }
