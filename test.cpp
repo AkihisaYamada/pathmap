@@ -23,7 +23,7 @@ ostream& operator<<(ostream& os, vector<T> const& xs) {
 template<typename L, typename T, class P = vector<L>>
 ostream& operator<<(ostream& os, pathmap<L,T,P> const& m) {
 	for( auto it = m.begin(); it != m.end(); it++ ) {
-		os << "{ " << it.path() << "} : " << *it << endl;
+		os << it.path() << " : " << *it << endl;
 	}
 	return os;
 }
